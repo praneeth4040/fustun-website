@@ -32,9 +32,28 @@ html, body, #root {
 body {
   margin: 0;
   background:
-    radial-gradient(1000px 400px at 80% -50%, var(--biscuit-100), transparent 60%),
-    radial-gradient(800px 400px at -20% 20%, var(--biscuit-50), transparent 50%),
+    radial-gradient(1200px 460px at 80% -60%, var(--biscuit-100), transparent 60%),
+    radial-gradient(900px 500px at 85% 95%, var(--biscuit-100), transparent 65%),
+    radial-gradient(900px 460px at -20% 20%, var(--biscuit-50), transparent 52%),
     var(--bg);
+}
+
+/* Global notebook-style lines across the whole page */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(238, 217, 196, 0.12) 0,
+      rgba(238, 217, 196, 0.12) 1px,
+      transparent 1px,
+      transparent 28px
+    );
+  mix-blend-mode: multiply;
 }
 
 html { scroll-behavior: smooth; }
