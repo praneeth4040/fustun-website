@@ -4,8 +4,10 @@
   position: sticky;
   top: 0;
   z-index: 20;
-  backdrop-filter: saturate(180%) blur(10px);
-  background: rgba(255,255,255,0.7);
+  backdrop-filter: saturate(180%) blur(12px);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.80), rgba(255,255,255,0.65)),
+    radial-gradient(600px 160px at 10% -40%, rgba(255,243,230,.55), rgba(255,243,230,0) 60%);
   border-bottom: 1px solid rgba(15, 23, 42, 0.06);
 }
 .nav-inner {
@@ -16,16 +18,22 @@
 }
 .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; }
 .brand img { width: 28px; height: 28px; }
-.nav-links { display: flex; gap: 14px; align-items: center; }
+.nav-links { display: flex; gap: 12px; align-items: center; }
 .nav-links a { padding: 8px 10px; border-radius: 8px; font-weight: 600; color: var(--text-700); }
 .nav-links a:hover { background: var(--biscuit-100); }
+/* Active section link (only for hash links) */
+.nav-links a[href^="#"].active { background: linear-gradient(180deg, var(--biscuit-100), var(--biscuit-200)); color: #6b4f3b; box-shadow: var(--shadow-sm); }
 /* Counters for stars/forks */
 .counter { display:inline-flex; align-items:center; gap:6px; font-weight:700; color:#6b4f3b; background: linear-gradient(180deg, var(--biscuit-100), var(--biscuit-200)); border:1px solid rgba(107,79,59,0.15); padding:6px 10px; border-radius:999px; box-shadow: var(--shadow-sm); }
 .counter svg { width:14px; height:14px; }
-.menu-btn { display:none; align-items:center; justify-content:center; width:36px; height:36px; border-radius:10px; border:1px solid rgba(15,23,42,.08); background:#fff; box-shadow: var(--shadow-sm); }
-.menu-btn:hover { box-shadow: var(--shadow-md); }
+.menu-btn { display:none; }
 
-.hero { padding: 72px 0 24px; position: relative; overflow: hidden; perspective: 1000px; }
+/* Compact GitHub pill replacing multiple counters */
+.gh-pill { display:inline-flex; align-items:center; gap:8px; font-weight:700; color:#6b4f3b; background: linear-gradient(180deg, var(--biscuit-100), var(--biscuit-200)); border:1px solid rgba(107,79,59,0.15); padding:6px 10px; border-radius:999px; box-shadow: var(--shadow-sm); }
+.gh-pill svg { width:14px; height:14px; }
+.gh-pill .sep { opacity:.45; }
+
+.hero { padding: 72px 0 24px; position: relative; overflow: visible; perspective: 1000px; }
 /* Hero inherits global lines; remove per-section overlay to avoid doubling */
 .hero-inner { display: grid; grid-template-columns: 1.2fr 1fr; gap: 32px; align-items: center; }
 .hero h1 { font-size: clamp(28px, 6vw, 48px); line-height: 1.1; margin: 14px 0; letter-spacing: -0.02em; }
@@ -35,11 +43,16 @@
 .caret { width: 10px; height: 1.2em; border-right: 2px solid #6b4f3b; animation: blink 1s steps(1) infinite; }
 @keyframes blink { 50% { border-right-color: transparent; } }
 
-/* Add a gentle biscuit gradient overlay just for the hero area */
-.hero::before { content: ""; position: absolute; inset: -10% -10% -10% -10%; pointer-events: none; z-index: 0;
+/* Add a gentle biscuit gradient overlay just for the hero area
+   Blend it smoothly with the page by using alpha colors + a soft mask */
+.hero::before { content: ""; position: absolute; inset: -15% -15% 0 -15%; pointer-events: none; z-index: 0;
   background:
-    radial-gradient(700px 320px at 10% 20%, var(--biscuit-100), transparent 62%),
-    radial-gradient(680px 340px at 92% 90%, var(--biscuit-100), transparent 66%);
+    radial-gradient(700px 320px at 10% 20%, rgba(255,243,230,.75), rgba(255,243,230,0) 62%),
+    radial-gradient(680px 340px at 92% 90%, rgba(255,243,230,.7), rgba(255,243,230,0) 66%);
+  /* Feather the edges so the section doesn’t look like a boxed block */
+  -webkit-mask-image: radial-gradient(85% 80% at 50% 40%, #000 60%, rgba(0,0,0,0) 100%);
+  mask-image: radial-gradient(85% 80% at 50% 40%, #000 60%, rgba(0,0,0,0) 100%);
+  mix-blend-mode: multiply;
 }
 .hero-new { position: relative; z-index: 1; }
 
@@ -117,11 +130,19 @@
 
 .kicker { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: #6b4f3b; font-weight: 700; }
 
+/* Anchor offset so sticky nav doesn't cover headings */
+section[id] { scroll-margin-top: 92px; }
+
 .how .step { padding: 20px; display: grid; gap: 10px; }
 .how .num { display:inline-flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:999px; background: var(--biscuit-300); color:#3b2f2a; font-weight:800; }
 
-.footer { padding: 24px 0 48px; color: var(--text-700); }
-.footer .row { display:flex; justify-content: space-between; align-items:center; gap: 12px; flex-wrap: wrap; }
+.footer { padding: 32px 0 56px; color: var(--text-700); border-top: 1px solid rgba(15,23,42,.06); background: linear-gradient(180deg, rgba(255,243,230,.25), rgba(255,250,245,0) 60%); }
+.footer .cols { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); align-items: start; }
+.footer .brand-line { display:flex; align-items:center; gap:10px; }
+.footer .footer-links { display:grid; gap: 8px; align-content: start; }
+.footer .footer-links a { color: var(--text-700); }
+.footer .footer-links a:hover { color: #6b4f3b; text-decoration: underline; text-underline-offset: 3px; }
+.footer .adjunct-link { display:inline-flex; align-items:center; padding:2px 8px; border-radius:999px; background: linear-gradient(180deg, var(--biscuit-100), var(--biscuit-200)); border:1px solid rgba(107,79,59,.15); color:#6b4f3b; font-weight:700; font-size:12px; box-shadow: var(--shadow-sm); }
 
 /* Reveal on scroll */
 .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s cubic-bezier(.2,.7,.2,1), transform .6s cubic-bezier(.2,.7,.2,1); will-change: opacity, transform; }
@@ -148,11 +169,8 @@
 
 /* Mobile navigation and layout tweaks */
 @media (max-width: 860px) {
-  .menu-btn { display: inline-flex; }
-  .nav-inner { position: relative; }
-  .nav-links { position: absolute; top: 68px; left: 0; right: 0; display: none; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(15,23,42,.06); padding: 12px; box-shadow: var(--shadow-sm); }
-  .nav-links.open { display: grid; grid-template-columns: 1fr; gap: 8px; }
-  .nav-links a { padding: 10px 12px; }
+  .nav-links { position: static; display: flex !important; background: transparent; backdrop-filter: none; border: 0; padding: 0; box-shadow: none; }
+  .nav-links a { padding: 8px 10px; }
 }
 
 @media (max-width: 600px) {
@@ -188,6 +206,19 @@
 
 @media (prefers-reduced-motion: reduce) {
   .panel, .panel .shine, .bg-orb, .preloader, .loader-ring { animation: none !important; transition: none !important; }
+}
+
+/* Focus styles for accessibility */
+a:focus-visible, .btn:focus-visible, .menu-btn:focus-visible, .counter:focus-visible {
+  outline: 2px solid var(--biscuit-400);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px rgba(255,255,255,.8), 0 0 0 4px rgba(229,205,182,.7);
+}
+
+/* High-contrast preference: stronger borders/shadows */
+@media (prefers-contrast: more) {
+  .card, .feature-card, .panel, .browser, .summary-card, .video-card, .btn { border-color: rgba(15,23,42,.18); box-shadow: 0 2px 10px rgba(16,24,40,.18); }
+  .nav { background: rgba(255,255,255,0.9); }
 }
 
 /* Preview section */

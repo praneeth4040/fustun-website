@@ -9,7 +9,10 @@ export default function Hero(){
         <div className="reveal">
           <div className="eyebrow"><span className="sr-only">Badge:</span>New • Open‑source</div>
           <h1>Turn long pages into quick notes</h1>
-          <p className="lead">Fustun helps you skim less and learn more. Highlight text to get a clean summary, open tabs by command, and breeze through research.</p>
+          <p className="lead">Fustun helps you skim less and learn more. Highlight text to get a clean summary, open tabs by command, and breeze through research. It’s an AI study tool and research helper built for students and lifelong learners.</p>
+          <p className="muted" style={{marginTop: 6}}>
+            Free student tools • Open‑source • Privacy‑first • Fast browser summarizer
+          </p>
           <div>
             <Typewriter phrases={[
               'Summarize any page in seconds',
